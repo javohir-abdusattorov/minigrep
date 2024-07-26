@@ -16,18 +16,18 @@ https://doc.rust-lang.org/beta/book/ch12-00-an-io-project.html
 **Use cases**
 Say, you have large file and you want to search in the file for some exact string. Example file to test is given in the repository. But you can search from any file only file should be encoded UTF-8
 ```bash
-> cargo run -- search_query file.txt
+cargo run -- search_query file.txt
 ```
 
 If you want to search without case sensitivity, you have to set env variable IGNORE_CASE
 ```bash
-> IGNORE_CASE=1 cargo run -- search_query file.txt
+IGNORE_CASE=1 cargo run -- search_query file.txt
 ```
 
 **Example output**
 When minigrep finds results with given query, it prints them to std out:
-```bash
-> cargo run -- lorem file.txt
+```text
+cargo run -- lorem file.txt
 
 03-20 | The point of using Lorem Ipsum is that it has a more-or-less
 06-39 | packages and web page editors now use Lorem Ipsum as their default model text, 
