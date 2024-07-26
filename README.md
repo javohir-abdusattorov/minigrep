@@ -10,7 +10,7 @@ https://doc.rust-lang.org/beta/book/ch12-00-an-io-project.html
 
 **Building**:
 ```bash
-> cargo build
+cargo build
 ```
 
 **Use cases**
