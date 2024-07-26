@@ -38,3 +38,8 @@ cargo run -- lorem file.txt
 18-80 | Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum 
 19-39 | which looks reasonable. The generated Lorem Ipsum is therefore
 ```
+
+Output format is
+```
+{ROW}-{COLUMN} | {Full line that query was found}
+```

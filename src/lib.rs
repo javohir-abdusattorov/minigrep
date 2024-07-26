@@ -37,8 +37,6 @@ pub struct Line<'a> {
 pub fn run(config: Config) -> Result<(), Box<dyn StdError>> {
     let contents = fs::read_to_string(&config.file_path)?;
 
-    // println!("Arguments: \nSearch = {} \nFile = {} \nContent = {}", config.query, config.file_path, contents);
-
     let found = match config.ignore_case {
         true => search(&config.query, &contents, |s: &str| {
             s.to_lowercase()
