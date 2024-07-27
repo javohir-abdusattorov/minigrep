@@ -34,17 +34,11 @@ pub struct Line<'a> {
     pub text: &'a str,
 }
 
+
 pub fn run(config: Config) -> Result<(), Box<dyn StdError>> {
     let contents = fs::read_to_string(&config.file_path)?;
 
-    let found = match config.ignore_case {
-        true => search(&config.query, &contents, |s: &str| {
-            s.to_lowercase()
-        }),
-        false => search(&config.query, &contents, |s: &str| {
-            s.to_string()
-        }),
-    };
+    let found = search(&config.query, &contents, formatter(&config));
 
     for line in found {
         println!("{}-{} | {}", pad(line.row.to_string(), 2), pad(line.col.to_string(), 2), line.text);
@@ -53,7 +47,8 @@ pub fn run(config: Config) -> Result<(), Box<dyn StdError>> {
     Ok(())
 }
 
-pub fn search<'a>(query: &str, contents: &'a str, formatter: impl Fn(&str) -> String) -> Vec<Line<'a>> {
+
+fn search<'a>(query: &str, contents: &'a str, formatter: impl Fn(&str) -> String) -> Vec<Line<'a>> {
     let query_formatted = formatter(query);
     let query_len = query_formatted.len();
 
@@ -93,6 +88,17 @@ pub fn search<'a>(query: &str, contents: &'a str, formatter: impl Fn(&str) -> St
     result
 }
 
+fn formatter(config: &Config) -> impl Fn(&str) -> String {
+    match config.ignore_case {
+        true => |s: &str| {
+            s.to_lowercase()
+        },
+        false => |s: &str| {
+            s.to_string()
+        },
+    }
+}
+
 fn pad(n: String, l: usize) -> String {
     let padded = l - n.len();
     let mut zeros: Vec<&str> = vec![];
@@ -103,6 +109,7 @@ fn pad(n: String, l: usize) -> String {
 
     format!("{}{}", zeros.join(""), n)
 }
+
 
 #[cfg(test)]
 mod tests {
